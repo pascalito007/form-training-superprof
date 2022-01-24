@@ -1,0 +1,105 @@
+<form [formGroup]="identityForm" (ngSubmit)="onIndentitySubmit()">
+  <div class="container">
+    <div formGroupName="companyData">
+      <div class="form-group">
+        <label>Nom*</label>
+        <input
+          type="text"
+          name="name"
+          class="form-control"
+          formControlName="name"
+        />
+        <span
+          *ngIf="
+            !identityForm.get('companyData.name').valid &&
+            identityForm.get('companyData.name').touched
+          "
+          class="help-block"
+          >Votre nom est invalide</span
+        >
+      </div>
+
+      <div class="form-group">
+        <input
+          type="text"
+          name="code"
+          placeholder="Code société*"
+          class="form-control"
+          formControlName="code"
+        />
+        <!-- <span class="help-block">Votre code est invalide</span> -->
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="abbreviation"
+          placeholder="Nom abrégé*"
+          class="form-control"
+          formControlName="abbreviation"
+        />
+        <span class="help-block">Votre abbreviation est invalide</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="siret"
+          placeholder="SIRET*"
+          class="form-control"
+          formControlName="siret"
+        />
+        <span class="help-block">Votre siret est invalide</span>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="tva"
+          placeholder="TVA Intracommunautaire"
+          class="form-control"
+          formControlName="tva"
+        />
+        <!-- <span class="help-block">Votre TVA est: {{ valeurTVA }}</span> -->
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select name="type" class="form-control" formControlName="type">
+          <option value="particulier">Particulier</option>
+          <option value="professionel">Professionel</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-default" (click)="addInfoSupplementaire()">
+          Info supplémentaires
+        </button>
+      </div>
+      <div formArrayName="additionalInfo">
+        <div>
+          <my-panel
+            *ngFor="
+              let info of identityForm.get('additionalInfo').controls;
+              let i = index
+            "
+            [customFG]="info"
+          ></my-panel>
+          <!-- <input
+            type="text"
+            class="form-control"
+            [formControlName]="control1"
+          />
+          <select formControlName="control2" class="form-control">
+            <option>toto</option>
+          </select> -->
+        </div>
+      </div>
+      <button
+        [disabled]="!identityForm.valid"
+        class="btn btn-secondary"
+        type="submit"
+      >
+        Enregistrer
+      </button>
+    </div>
+  </div>
+</form>
